@@ -1,0 +1,20 @@
+{
+  "name": "experiment-promotion-check",
+  "version": "0.0.1",
+  "description": "GitHub Action to check if experiments are being promoted to features",
+  "main": "index.js",
+  "repository": "git@github.com:jstnjns/experiment-promotion-check.git",
+  "author": "justinjones53@gmail.com <justinjones53@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.2.0",
+    "@actions/github": "^2.0.0",
+    "lodash": "^4.17.15"
+  },
+  "devDependencies": {
+    "@zeit/ncc": "^0.21.0"
+  },
+  "scripts": {
+    "build": "ncc build index.js"
+  }
+}
