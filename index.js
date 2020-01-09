@@ -26,16 +26,18 @@ async function run() {
     pull_number: github.context.payload.pull_request.number,
   })
 
-  core.debug('Filtering promoted experiment files...')
-  const promoted =
+  core.debug('Filtering changed files...')
+  const before = new Regex(core.getInput('before'))
+  const after = new Regex(core.getInput('after'))
+  const matched =
     filter(files, file =>
       file.status === 'renamed' &&
-      /experiment/.test(file.previous_filename) &&
-      !/experiment/.test(file.filename)
+      before.test(file.previous_filename) &&
+      after.test(file.filename)
     )
 
-  core.debug('Promoted experiments files:')
-  console.log(promoted, !!promoted.length)
+  core.debug('Matched files:')
+  console.log(matched, !!matched.length)
 }
 
 
