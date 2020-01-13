@@ -4,13 +4,10 @@ inputs:
   repo-token:
     description: 'GitHub Token'
     required: true
-  status:
-    description: 'Which statuses should the filters apply to?'
-    default: ['added', 'removed', 'renamed', 'modified']
+  match:
+    description: 'File name'
   before:
     description: 'File name, before'
-  after:
-    description: 'File name, after'
 outputs:
   files: # id of output
     description: 'Files that have been promoted'

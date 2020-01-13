@@ -27,17 +27,29 @@ async function run() {
   })
 
   core.debug('Filtering changed files...')
-  const before = new Regex(core.getInput('before'))
-  const after = new Regex(core.getInput('after'))
+  const before = core.getInput('before') ? new Regex(core.getInput('before')) : false
+  const match = core.getInput('match') ? new Regex(core.getInput('match')) : false
+
   const matched =
-    filter(files, file =>
-      file.status === 'renamed' &&
-      before.test(file.previous_filename) &&
-      after.test(file.filename)
-    )
+    filter(files, file => {
+      if (before && match && file.previous_filename) {
+        return
+          before.test(file.previous_filename) &&
+          match.test(file.filename)
+      }
+
+      if (before && file.previous_filename) {
+        return before.test(file.previous_filename)
+      }
+
+      if (match) {
+        return match.test(file.filename)
+      }
+    })
 
   core.debug('Matched files:')
   console.log(matched, !!matched.length)
+  core.setOutput('files', matched)
 }
 
 
