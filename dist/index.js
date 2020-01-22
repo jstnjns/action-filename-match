@@ -453,13 +453,6 @@ const core = __webpack_require__(470)
 const github = __webpack_require__(469)
 const { filter } = __webpack_require__(557)
 
-const {
-  GITHUB_SHA,
-  GITHUB_EVENT_PATH,
-  GITHUB_TOKEN,
-  GITHUB_WORKSPACE,
-} = process.env
-
 
 async function run() {
   if (!github.context.payload.pull_request) {

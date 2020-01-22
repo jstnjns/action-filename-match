@@ -2,13 +2,6 @@ const core = require('@actions/core')
 const github = require('@actions/github')
 const { filter } = require('lodash')
 
-const {
-  GITHUB_SHA,
-  GITHUB_EVENT_PATH,
-  GITHUB_TOKEN,
-  GITHUB_WORKSPACE,
-} = process.env
-
 
 async function run() {
   if (!github.context.payload.pull_request) {
