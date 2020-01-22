@@ -31,8 +31,8 @@ async function run() {
 
   const matched =
     filter(files, file => {
-      console.log(match.test(file.filename))
-      
+      console.log(match, file.filename, match.test(file.filename))
+
       if (before && match && file.previous_filename) {
         return
           before.test(file.previous_filename) &&
