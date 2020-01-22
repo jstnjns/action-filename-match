@@ -31,6 +31,8 @@ async function run() {
 
   const matched =
     filter(files, file => {
+      console.log(match.test(file.filename))
+      
       if (before && match && file.previous_filename) {
         return
           before.test(file.previous_filename) &&
@@ -46,7 +48,7 @@ async function run() {
       }
     })
 
-  console.log(matched, !!matched.length)
+  console.log(matched)
   core.setOutput('files', matched)
 }
 
