@@ -3749,14 +3749,12 @@ async function run() {
   const token = core.getInput('github-token')
   const octokit = new github.GitHub(token)
 
-  core.debug('Fetching PR files...')
   const { data: files } = await octokit.pulls.listFiles({
     owner: github.context.repo.owner,
     repo: github.context.repo.repo,
     pull_number: github.context.payload.pull_request.number,
   })
 
-  core.debug('Filtering changed files...')
   const before = core.getInput('before') ? new Regex(core.getInput('before')) : false
   const match = core.getInput('match') ? new Regex(core.getInput('match')) : false
 
@@ -3777,7 +3775,6 @@ async function run() {
       }
     })
 
-  core.debug('Matched files:')
   console.log(matched, !!matched.length)
   core.setOutput('files', matched)
 }
