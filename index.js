@@ -18,6 +18,7 @@ async function run() {
 
   const token = core.getInput('github-token')
   const octokit = new github.GitHub(token)
+  core.debug(`token? ${token}`)
 
   core.debug('Fetching PR files...')
   const { data: files } = await octokit.pulls.listFiles({
