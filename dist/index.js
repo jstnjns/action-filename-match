@@ -3755,12 +3755,12 @@ async function run() {
     pull_number: github.context.payload.pull_request.number,
   })
 
-  const before = core.getInput('before') ? new Regex(core.getInput('before')) : false
   const match = core.getInput('match') ? new Regex(core.getInput('match')) : false
+  const before = core.getInput('before') ? new Regex(core.getInput('before')) : false
 
   const matched =
     filter(files, file => {
-      console.log(file.filename, match.test(file.filename))
+      console.log(file.filename, match.test(file.filename), core.getInput('match'))
 
       if (before && match && file.previous_filename) {
         return
