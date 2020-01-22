@@ -497,7 +497,7 @@ async function run() {
     })
 
   console.log(matched)
-  core.setOutput('files', matched)
+  core.setOutput('files', JSON.stringify(matched))
 }
 
 
