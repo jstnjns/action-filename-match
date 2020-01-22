@@ -30,8 +30,6 @@ async function run() {
 
   const matched =
     filter(files, file => {
-      console.log(file.filename, core.getInput('match'), match.test(file.filename))
-
       if (before && match && file.previous_filename) {
         return
           before.test(file.previous_filename) &&
