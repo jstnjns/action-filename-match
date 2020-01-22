@@ -1,7 +1,6 @@
 const core = require('@actions/core')
 const github = require('@actions/github')
 const { filter } = require('lodash')
-const Regex = require('regex')
 
 const {
   GITHUB_SHA,
@@ -26,12 +25,12 @@ async function run() {
     pull_number: github.context.payload.pull_request.number,
   })
 
-  const match = core.getInput('match') ? new Regex(core.getInput('match')) : false
-  const before = core.getInput('before') ? new Regex(core.getInput('before')) : false
+  const match = core.getInput('match') ? new RegExp(core.getInput('match')) : false
+  const before = core.getInput('before') ? new RegExp(core.getInput('before')) : false
 
   const matched =
     filter(files, file => {
-      console.log(file.filename, match.test(file.filename), core.getInput('match'))
+      console.log(file.filename, core.getInput('match'), match.test(file.filename))
 
       if (before && match && file.previous_filename) {
         return
