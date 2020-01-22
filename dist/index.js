@@ -3758,6 +3758,8 @@ async function run() {
   const before = core.getInput('before') ? new Regex(core.getInput('before')) : false
   const match = core.getInput('match') ? new Regex(core.getInput('match')) : false
 
+  console.log(files)
+
   const matched =
     filter(files, file => {
       console.log(match, file.filename, match.test(file.filename))
