@@ -19,12 +19,16 @@ async function run() {
     pull_number: github.context.payload.pull_request.number,
   })
 
-  const match = core.getInput('match', { required: true })
-  const fn = new AsyncFunction('require', 'files', match)
-  const result = await fn(require, files)
+  try {
+    const match = core.getInput('match', { required: true })
+    const fn = new AsyncFunction('require', 'files', match)
+    const result = await fn(require, files)
 
-  console.log(result)
-  core.setOutput('files', JSON.stringify(result))
+    console.log(result)
+    core.setOutput('files', JSON.stringify(result))
+  } catch(err) {
+    core.setFailed(err)
+  }
 }
 
 
