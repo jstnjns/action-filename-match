@@ -9,37 +9,22 @@ async function run() {
     return
   }
 
+  const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor
   const token = core.getInput('github-token')
-  const octokit = new github.GitHub(token)
+  const github = new GitHub(token)
 
-  const { data: files } = await octokit.pulls.listFiles({
+  const { data: files } = await github.pulls.listFiles({
     owner: github.context.repo.owner,
     repo: github.context.repo.repo,
     pull_number: github.context.payload.pull_request.number,
   })
 
-  const match = core.getInput('match') ? new RegExp(core.getInput('match')) : false
-  const before = core.getInput('before') ? new RegExp(core.getInput('before')) : false
+  const match = core.getInput('match', { required: true })
+  const fn = new AsyncFunction('require', 'files', match)
+  const result = await fn(require, files)
 
-  const matched =
-    filter(files, file => {
-      if (before && match && file.previous_filename) {
-        return
-          before.test(file.previous_filename) &&
-          match.test(file.filename)
-      }
-
-      if (before && file.previous_filename) {
-        return before.test(file.previous_filename)
-      }
-
-      if (match) {
-        return match.test(file.filename)
-      }
-    })
-
-  console.log(matched)
-  core.setOutput('files', JSON.stringify(matched))
+  console.log(result)
+  core.setOutput('files', JSON.stringify(result))
 }
 
 
